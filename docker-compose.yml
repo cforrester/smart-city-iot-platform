@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  go-api:
+    build: ./go-api
+    ports:
+      - "8080:8080"
+    depends_on:
+      - python-ml
+    restart: always
+
+  python-ml:
+    build: ./python-ml
+    ports:
+      - "8000:8000"
+    restart: always
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    restart: always
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: youruser
+      POSTGRES_PASSWORD: yourpassword
+      POSTGRES_DB: yourdb
+    ports:
+      - "5432:5432"
+    restart: always
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    restart: always
