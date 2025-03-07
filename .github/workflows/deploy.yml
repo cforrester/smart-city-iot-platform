@@ -43,15 +43,16 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_KEY }}
-          port: 22  # Explicitly specify SSH port (default is 22)
+          port: 22
           script: |
             mkdir -p ~/.ssh
             chmod 700 ~/.ssh
             eval $(ssh-agent -s)
-            ssh-add - <<< "${{ secrets.SSH_KEY }}"
+            echo "${{ secrets.SSH_KEY }}" | tr -d '\r' | ssh-add -
             ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.HOST }} << 'EOF'
               cd /home/github/smart-city-iot-platform
               docker-compose pull
               docker-compose up -d --remove-orphans
             EOF
+
 
