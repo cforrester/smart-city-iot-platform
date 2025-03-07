@@ -36,6 +36,9 @@ jobs:
           context: ./python-ml
           push: true
           tags: ghcr.io/${{ github.repository }}/python-ml:latest
+      - name: Debug SSH Key
+        run: |
+          echo "${{ secrets.SSH_KEY }}" | base64
 
       - name: Deploy to VPS via SSH
         uses: appleboy/ssh-action@v0.1.8
@@ -54,5 +57,6 @@ jobs:
               docker-compose pull
               docker-compose up -d --remove-orphans
             EOF
+
 
 
