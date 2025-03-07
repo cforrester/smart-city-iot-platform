@@ -8,7 +8,8 @@ services:
     depends_on:
       - python-ml
     restart: always
-
+    environment:
+      - ML_SERVICE_URL=http://python-ml:8000/predict
   python-ml:
     build: ./python-ml
     ports:

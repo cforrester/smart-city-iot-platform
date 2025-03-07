@@ -1,16 +1,11 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
-import random
+from routes import health, predict
 
 app = FastAPI()
 
-class InputData(BaseModel):
-    text: str
-
-@app.post("/predict")
-async def predict(data: InputData):
-    # Simple simulation: randomly choose a label
-    label = "positive" if random.random() > 0.5 else "negative"
-    return {"prediction": {"label": label}}
-
-# To run: uvicorn app:app --host 0.0.0.0 --port 8000
+# Include routes
+app.include_router(health.router)
+app.include_router(predict.router)
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
