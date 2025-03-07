@@ -12,15 +12,21 @@ services:
       - ML_SERVICE_URL=http://python-ml:8000/predict
   python-ml:
     build: ./python-ml
+    depends_on:
+      - redis
+    networks:
+      - smart-network
     ports:
       - "8000:8000"
     restart: always
 
   redis:
-    image: redis:7-alpine
+    image: "redis:latest"
     ports:
       - "6379:6379"
     restart: always
+    networks:
+      - smart-network
 
   postgres:
     image: postgres:15
@@ -38,3 +44,8 @@ services:
       - "5672:5672"
       - "15672:15672"
     restart: always
+
+networks:
+  smart-network:
+    driver: bridge
+    
