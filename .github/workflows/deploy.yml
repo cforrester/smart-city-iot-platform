@@ -36,27 +36,23 @@ jobs:
           context: ./python-ml
           push: true
           tags: ghcr.io/${{ github.repository }}/python-ml:latest
-      - name: Debug SSH Key
-        run: |
-          echo "${{ secrets.SSH_KEY }}" | base64
+      - name: Debug SSH Connection
+        run: ssh -vvv -i <(echo "${{ secrets.SSH_KEY }}") ${{ secrets.USER }}@${{ secrets.HOST }}
 
-      - name: Deploy to VPS via SSH
-        uses: appleboy/ssh-action@v0.1.8
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          key: ${{ secrets.SSH_KEY }}
-          port: 22
-          script: |
-            mkdir -p ~/.ssh
-            chmod 700 ~/.ssh
-            eval $(ssh-agent -s)
-            echo "${{ secrets.SSH_KEY }}" | tr -d '\r' | ssh-add -
-            ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.HOST }} << 'EOF'
-              cd /home/github/smart-city-iot-platform
-              docker-compose pull
-              docker-compose up -d --remove-orphans
-            EOF
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_KEY" | tr -d '\r' | ssh-add -
+          ssh-keyscan -H cforrester.org >> ~/.ssh/known_hosts
+      - name: Deploy using SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
+        run: |
+          ssh -o ConnectTimeout=30 -o StrictHostKeyChecking=no github@cforrester.org << 'EOF'
+            cd /home/user/smart-city-iot-platform
+            docker-compose pull
+            docker-compose up -d --remove-orphans
+          EOF
 
 
 
