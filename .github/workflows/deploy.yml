@@ -36,8 +36,6 @@ jobs:
           context: ./python-ml
           push: true
           tags: ghcr.io/${{ github.repository }}/python-ml:latest
-      - name: Ping host
-        run: ping -c 4 ${{ secrets.HOST }}
       - name: check port
         run: nc -zv ${{ secrets.HOST }} 22 || echo "Port 22 is closed"
       - name: Debug SSH Connection
