@@ -1,0 +1,28 @@
+[0;1;32m●[0m ssh.service - OpenBSD Secure Shell server
+     Loaded: loaded (]8;;file://localhost/usr/lib/systemd/system/ssh.service/usr/lib/systemd/system/ssh.service]8;;; [0;1;38;5;185mdisabled[0m; preset: [0;1;32menabled[0m)
+     Active: [0;1;32mactive (running)[0m since Sat 2025-03-08 00:43:27 UTC; 1h 5min ago
+TriggeredBy: [0;1;32m●[0m ssh.socket
+       Docs: ]8;;man:sshd(8)man:sshd(8)]8;;
+             ]8;;man:sshd_config(5)man:sshd_config(5)]8;;
+    Process: 99031 ExecStartPre=/usr/sbin/sshd -t (code=exited, status=0/SUCCESS)
+   Main PID: 99033 (sshd)
+      Tasks: 5 (limit: 4609)
+     Memory: 16.4M (peak: 34.0M swap: 1.3M swap peak: 2.7M)
+        CPU: 2min 13.370s
+     CGroup: /system.slice/ssh.service
+             ├─[0;38;5;245m 99033 "sshd: /usr/sbin/sshd -D [listener] 2 of 10-100 startups"[0m
+             ├─[0;38;5;245m100797 "sshd: root [priv]"[0m
+             ├─[0;38;5;245m100798 "sshd: root [net]"[0m
+             ├─[0;38;5;245m100799 "sshd: unknown [priv]"[0m
+             └─[0;38;5;245m100800 "sshd: unknown [net]"[0m
+
+Mar 08 01:49:16 localhost sshd[100795]: [0;1;39m[0;1;31m[0;1;39mpam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=48.211.170.82[0m
+Mar 08 01:49:17 localhost sshd[100784]: Received disconnect from 218.92.0.231 port 19814:11:  [preauth]
+Mar 08 01:49:17 localhost sshd[100784]: Disconnected from authenticating user root 218.92.0.231 port 19814 [preauth]
+Mar 08 01:49:17 localhost sshd[100784]: [0;1;39m[0;1;31m[0;1;39mPAM 2 more authentication failures; logname= uid=0 euid=0 tty=ssh ruser= rhost=218.92.0.231  user=root[0m
+Mar 08 01:49:18 localhost sshd[100795]: Failed password for invalid user oscar from 48.211.170.82 port 44622 ssh2
+Mar 08 01:49:19 localhost sshd[100799]: Invalid user dolphinscheduler from 48.211.170.82 port 44640
+Mar 08 01:49:19 localhost sshd[100799]: [0;1;39m[0;1;31m[0;1;39mpam_unix(sshd:auth): check pass; user unknown[0m
+Mar 08 01:49:19 localhost sshd[100799]: [0;1;39m[0;1;31m[0;1;39mpam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=48.211.170.82[0m
+Mar 08 01:49:19 localhost sshd[100797]: [0;1;39m[0;1;31m[0;1;39mpam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=218.92.0.231  user=root[0m
+Mar 08 01:49:19 localhost sshd[100795]: Connection closed by invalid user oscar 48.211.170.82 port 44622 [preauth]
